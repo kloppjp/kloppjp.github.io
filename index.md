@@ -1,1 +1,6 @@
-This is kloppjp.github.io
+Welcome to kloppjp.github.io!
+
+### Publications
+
+* [Utilizing Low Complexity CNNs for Video Coding](https://kloppjp.github.io/cnnvc) (Online-trained denoiser)
+* [What Synthesis is Missing: Weak Depth Adaptation Integrated w/ Weak Supervision](https://kloppjp.github.io/depthadaptation)
