@@ -1,0 +1,189 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: ff-tisa-sans-web-pro, sans-serif;
+            font-style: normal;
+            font-weight: 400;
+        }
+        h1 {
+            font-size: 18px;
+        }
+        h2 {
+            font-size: 16px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            font-size: 14px;
+        }
+        p {
+            font-size: 14px;
+        }
+        a {
+            font-size: 14px;
+        }
+        pre {
+            font-family: monospace;
+            font-size: 12px;
+        }
+        tr.border_bottom td {
+            border-bottom:1pt solid black;
+        }
+        tr.border_top td {
+            border-top:1pt solid black;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Utilising Low Complexity CNNs to Lift Non-Local Redundancies in Video Coding</title>
+</head>
+<body>
+<div style="text-align: center">
+    <h1>Utilising Low Complexity CNNs to Lift Non-Local Redundancies in Video Coding</h1>
+    <p><a href="mailto:kloppjp@gmail.com">Jan P. Klopp （柯揚）</a>, Liang-Gee Chen （陳良基）, Shao-Yi Chien （簡韶逸）</p>
+    <p style="font-size: 12px">Graduate Institute of Electrical Engineering, National Taiwan University</p>
+    <h2>Main Results</h2>
+    <div style="width: 500px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px; line-height: 160%">
+        <ul>
+            <li>Online (at encoding time) trained denoiser</li>
+            <li>Design of a highly efficient CNN</li>
+            <li>Parameters can be signalled to decoder</li>
+            <li>Compared to H265, up to 6.8% coding gain Chroma, up to 14.4% on Luma</li>
+            <li>Complexity 216 to 486 MAC/Pixel, a thousand times less than pretrained denoisers</li>
+        </ul>
+    </div>
+    <h2>Methods</h2>
+    <img src="system.png" style="width: 700px">
+    <div style="width: 700px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px; line-height: 140%">
+        <ol>
+            <li>Train CNN on the fly to predict residuals of a group of pictures (GoP)</li>
+            <li>Quantise the CNN's parameters</li>
+            <li>Test the CNN's performance</li>
+            <li>Compress parameters and add to bit stream if test is positive</li>
+        </ol>
+        The dashed arrows/boxes indicate data transfer/operations that are only
+        carried out in streaming scenarios where the decoder can access previous GoP's data.
+        <ol start="5">
+            <li>Test previously signalled CNN on the new GoP</li>
+            <li>Fine-tune CNN on new GoP</li>
+            <li>Quantise fine-tuned CNN's parameters</li>
+            <li>Test fine-tuned and quantised CNN</li>
+            <li>If gains are higher than from previous CNN, compress and add to bit stream</li>
+        </ol>
+    </div>
+    <h2>Material</h2>
+    <a href="https://ieeexplore.ieee.org/document/9088301">Paper (IEEE Xplore)</a>&nbsp;&nbsp;&nbsp;
+    <a href="https://arxiv.org/abs/1910.08737">Paper (preprint)</a>&nbsp;
+    <h2>Additional Results</h2>
+    <div style="width: 700px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px; line-height: 140%">
+    We supply a few preliminary results for applying our method to two codecs used in practice: x265 and AV1. For a full
+        comparision, please refer to the results in the paper (link above), as our method has not been adjusted for x265
+        or AV1. Comparison is provided in the form of BDRate coding gain over the respective baseline codec, YUV PSNR
+        values were averaged with weights 6, 1 and 1 as is common practice in video coding.
+    </div>
+    <h3>Comparison w/ x265 as baseline</h3>
+    <table style="width: 700px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px;" cellspacing="0"
+    cellpadding="3">
+        <tr class="border_top"><td>&nbsp;</td><td>&nbsp;</td>
+            <td colspan="2" style="text-align: center; font-weight: bold">GoP: 32 Frames</td>
+            <td colspan="2" style="text-align: center; font-weight: bold">GoP: 128 Frames</td></tr>
+        <tr class="border_bottom"><td>Dataset</td><td>Resolution</td>
+            <td style="text-align: right">Complexity (MAC/pixel)</td><td style="text-align: right">Coding Gain</td>
+            <td style="text-align: right">Complexity (MAC/pixel)</td><td style="text-align: right">Coding Gain</td></tr>
+        <tr>
+            <td>HM A</td>
+            <td>2560&times;1600</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-6.5&percnt;</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-6.9&percnt;</td>
+        </tr>
+        <tr><td>HM B</td><td>1920&times;1080</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-5.5&percnt;</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-5.7&percnt;</td></tr>
+        <tr><td>HM C</td><td>832&times;480</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-5.1&percnt;</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-5.4&percnt;</td></tr>
+        <tr><td>VTM A</td><td>3840&times;2160</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-4.9&percnt;</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-5.0&percnt;</td></tr>
+        <tr class="border_bottom"><td>VTM B</td><td>1920&times;1080</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-4.5&percnt;</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-5.4&percnt;</td></tr>
+    </table>
+    <h3>Comparison w/ AV1 as baseline</h3>
+    <table style="width: 700px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px;" cellspacing="0"
+           cellpadding="3">
+        <tr class="border_top"><td>&nbsp;</td><td>&nbsp;</td>
+            <td colspan="2" style="text-align: center; font-weight: bold">GoP: 32 Frames</td>
+            <td colspan="2" style="text-align: center; font-weight: bold">GoP: 128 Frames</td></tr>
+        <tr class="border_bottom"><td>Dataset</td><td>Resolution</td>
+            <td style="text-align: right">Complexity (MAC/pixel)</td><td style="text-align: right">Coding Gain</td>
+            <td style="text-align: right">Complexity (MAC/pixel)</td><td style="text-align: right">Coding Gain</td></tr>
+        <tr>
+            <td>HM A</td>
+            <td>2560&times;1600</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-4.8&percnt;</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-4.7&percnt;</td>
+        </tr>
+        <tr><td>HM B</td><td>1920&times;1080</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-4.3&percnt;</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-4.2&percnt;</td></tr>
+        <tr><td>HM C</td><td>832&times;480</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-3.8&percnt;</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-4.2&percnt;</td></tr>
+        <tr><td>VTM A</td><td>3840&times;2160</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-3.0&percnt;</td>
+            <td style="text-align: right">148.5</td>
+            <td style="text-align: right">-3.0&percnt;</td></tr>
+        <tr class="border_bottom"><td>VTM B</td><td>1920&times;1080</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-4.0&percnt;</td>
+            <td style="text-align: right">486</td>
+            <td style="text-align: right">-3.9&percnt;</td></tr>
+    </table>
+    <div style="width: 700px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 10px; line-height: 140%; margin-top: 5px;">
+        <b>Sequences:</b> HM A: NebutaFestival, PeopleOnStreet, SteamLocomotiveTrain, Traffic;
+        HM B: BasketballDrive, BQTerrace, Cactus, Kimono1, ParkScene; HM C: BasketballDrill, BQMall, PartyScene, RaceHorses;
+        VTM A: Campfire, CatRobot1, DaylightRoad2, FoodMarket4, ParkRunning3, Tango2; VTM B: BasketballDrive, BQTerrace,
+        Cactus, MarketPlace, RitualDance
+    </div>
+    <h2>Cite</h2>
+    <p>If you find our work helpful for your research, please consider citing it:</p>
+    <div style="width: 700px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px">
+        <pre>@ARTICLE{9088301,
+            author={J. P. {Klopp} and L. {Chen} and S. {Chien}},
+            journal={IEEE Transactions on Image Processing},
+            title={Utilising Low Complexity CNNs to Lift Non-Local Redundancies in Video Coding},
+            year={2020},
+            volume={},
+            number={},
+            pages={1-1},
+            doi={10.1109/TIP.2020.2991525},
+            ISSN={1941-0042},
+            month={},}</pre>
+    </div>
+    <div style="display: inline-block; margin-left: auto; margin-right: auto; text-align: justify; font-size: 14px; margin-top: 20px">
+        <a href="https://video.ee.ntu.edu.tw/" ><img src="DSPIC.png" style="width: auto; height: 60px; display: inline-block; margin-left: 20px; margin-right: 20px;" alt="Logo of DSP/IC Lab"></a>
+        <a href="https://www.ntu.edu.tw/" ><img src="ntu_logo.png" style="width: auto; height: 60px; display: inline-block; margin-left: 20px; margin-right: 20px;" alt="Logo of National Taiwan University"></a>
+    </div>
+
+</div>
+
+</body>
+</html>
