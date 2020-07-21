@@ -9,3 +9,4 @@ Welcome to kloppjp.github.io!
 ### Code
 
 * [PyCodecs: A simple python interface for image coding with x265, AV1 & Co](https://github.com/kloppjp/pycodecs/)
+* [PyDe265: Python bindings for the libde265 H265 decoder](https://github.com/kloppjp/pyde265/)
