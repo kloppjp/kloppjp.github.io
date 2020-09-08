@@ -1,8 +1,8 @@
 ## Jan Klopp | 柯揚
 
-[Google Scholar](https://scholar.google.com.tw/citations?user=Ykx_L0UAAAAJ&hl=en) [LinkedIn](https://www.linkedin.com/in/janklopp/)
+[Google Scholar](https://scholar.google.com.tw/citations?user=Ykx_L0UAAAAJ&hl=en) | [LinkedIn](https://www.linkedin.com/in/janklopp/)
 
-### Publications
+### Publications (excerpt)
 
 * [Utilizing Low Complexity CNNs for Video Coding](https://kloppjp.github.io/cnnvc) (Online-trained denoiser)
 * [What Synthesis is Missing: Weak Depth Adaptation Integrated w/ Weak Supervision](https://kloppjp.github.io/depthadaptation)
