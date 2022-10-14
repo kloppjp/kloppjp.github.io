@@ -2,8 +2,9 @@
 
 [Google Scholar](https://scholar.google.com.tw/citations?user=Ykx_L0UAAAAJ&hl=en) | [LinkedIn](https://www.linkedin.com/in/janklopp/)
 
-### Publications (excerpt)
+### Publications
 
+* [Online-Trained Upsampler for Deep Low Complexity Video Compression](https://kloppjp.github.io/otu)
 * [Utilizing Low Complexity CNNs for Video Coding](https://kloppjp.github.io/cnnvc) (Online-trained denoiser)
 * [What Synthesis is Missing: Weak Depth Adaptation Integrated w/ Weak Supervision](https://kloppjp.github.io/depthadaptation)
 * [Learning to Compose with Professional Photographs on the Web](https://github.com/yiling-chen/view-finding-network)
